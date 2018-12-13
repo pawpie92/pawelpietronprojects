@@ -1,0 +1,28 @@
+###################################################################################
+###################################################################################
+###################################################################################
+###    _______                       __                              __         ###
+#t#   /       \                     /  |                            /  |        #l#
+#t#   fffffff  |  ______   _______  ff |   __   ______    _______  _ff |_       #l#
+#t#   ff |  ff | /        /         ff |  /  | /         /       |/ ff   |      #l#
+#t#   ff |  ff | ffffff  |fffffff  |ff |_/ff/ /ffffff  |/fffffff/ ffffff/       #l#
+#t#   ff |  ff | /    ff |ff |  ff |ff   ff<  ff    ff |ff      \   ff | __     #l#
+#t#   ff |__ff |/fffffff |ff |  ff |ffffff  \ ffffffff/  ffffff  |  ff |/  |    #l#
+#t#   ff    ff/ ff    ff |ff |  ff |ff | ff  |ff       |/     ff/   ff  ff/     #l#
+#t#   fffffff/   fffffff/ ff/   ff/ ff/   ff/  fffffff/ fffffff/     ffff/      #l#
+#t#    _______                                                                  #l#
+#t#   /       \                                                                 #l#
+#t#   jjjjjjj  | __    __  _______    ______    ______    ______   _______      #l#
+#t#   jj |  jj |/  |  /  |/       \  /      \  /      \  /      \ /       \     #l#
+#t#   jj |  jj |jj |  jj |jjjjjjj  |/jjjjjj  |/jjjjjj  |/jjjjjj  |jjjjjjj  |    #l#
+#t#   jj |  jj |jj |  jj |jj |  jj |jj |  jj |jj    jj |jj |  jj |jj |  jj |    #l#
+#t#   jj |__jj |jj  __jj |jj |  jj |jj    jj |jjjjjjjj/ jj  __jj |jj |  jj |    #l#
+#t#   jj    jj/ jj    jj/ jj |  jj |jj    jj |jj       |jj    jj/ jj |  jj |    #l#
+#t#   jjjjjjj/   jjjjjj/  jj/   jj/  jjjjjjj | jjjjjjj/  jjjjjj/  jj/   jj/     #l#
+#t#                                       jj |                                  #l#
+#t#                                 jj    jj/                                   #l#
+#t#                                  jjjjjj/                                    #l#
+###+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
+###################################################################################
+#### PRESS LEFT ARROW TO BEGIN ########sx##########################################
+###################################################################################
