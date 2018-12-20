@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class UserPlayer {
+public class UserPlayer implements CardConstants{
 
     protected ArrayList<Card> hand = new ArrayList<Card>();
     protected int handEvaluateValue;
@@ -37,8 +37,7 @@ public class UserPlayer {
     //Check if player has an ace
     public boolean aceExist()
     {
-        for(Card card : hand)
-            if (card.getRank() == 'A')
+            if (hand.get(0).getRank() == ACE)
             {
                 return true;
             }

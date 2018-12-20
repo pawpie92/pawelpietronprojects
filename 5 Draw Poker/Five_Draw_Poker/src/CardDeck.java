@@ -8,35 +8,35 @@
 import java.util.Collections;
 import java.util.Stack;
 
-public class CardDeck {
+public class CardDeck implements CardConstants {
     private Stack<Card> Deck = new Stack();
     private Collections dealer ;
 
 
     public void initializeDeck()
     {
-        this.initializeColorCards('C');
-        this.initializeColorCards('D');
-        this.initializeColorCards('H');
-        this.initializeColorCards('S');
+        this.initializeColorCards(CLUBS);
+        this.initializeColorCards(DIAMONDS);
+        this.initializeColorCards(HEARTS);
+        this.initializeColorCards(SPADES);
     }
 
     //Helper method for initializing the deck
     private void initializeColorCards(char c)
     {
-        this.Deck.push(new Card('2' , c));
-        this.Deck.push(new Card('3' , c));
-        this.Deck.push(new Card('4' , c));
-        this.Deck.push(new Card('5' , c));
-        this.Deck.push(new Card('6' , c));
-        this.Deck.push(new Card('7' , c));
-        this.Deck.push(new Card('8' , c));
-        this.Deck.push(new Card('9' , c));
-        this.Deck.push(new Card('T' , c));
-        this.Deck.push(new Card('J' , c));
-        this.Deck.push(new Card('Q' , c));
-        this.Deck.push(new Card('K' , c));
-        this.Deck.push(new Card('A' , c));
+        this.Deck.push(new Card(TWO , c));
+        this.Deck.push(new Card(THREE , c));
+        this.Deck.push(new Card(FOUR , c));
+        this.Deck.push(new Card(FIVE , c));
+        this.Deck.push(new Card(SIX , c));
+        this.Deck.push(new Card(SEVEN , c));
+        this.Deck.push(new Card(EIGHT , c));
+        this.Deck.push(new Card(NINE , c));
+        this.Deck.push(new Card(TEN , c));
+        this.Deck.push(new Card(JACK , c));
+        this.Deck.push(new Card(QUEEN , c));
+        this.Deck.push(new Card(KING , c));
+        this.Deck.push(new Card(ACE , c));
     }
 
 

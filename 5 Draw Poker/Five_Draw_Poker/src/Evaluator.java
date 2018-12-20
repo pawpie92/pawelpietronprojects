@@ -146,7 +146,7 @@ public class Evaluator {
         return true;
     }
     //Check if cards follow the sequence
-    public boolean isStaright(ArrayList<Card> hand)
+    public boolean isStraight(ArrayList<Card> hand)
     {
         int index = 0;
         for(Card card : hand)
@@ -170,12 +170,12 @@ public class Evaluator {
     //Main method for the evaluator
     public void evaluate(ArrayList<Card> hand)
     {
-        if(isStaright(hand) && isFlush(hand))
+        if(isStraight(hand) && isFlush(hand))
         {
             this.evaluateValue = 9;
             this.combinations = "Straight Flush";
         }
-        else if(isStaright(hand))
+        else if(isStraight(hand))
         {
             this.evaluateValue = 5;
             this.combinations = "Straight";

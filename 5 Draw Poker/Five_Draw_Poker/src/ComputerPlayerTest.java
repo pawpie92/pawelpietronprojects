@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  * Author Pawel Pietron
  */
 
-public class ComputerPlayerTest {
+public class ComputerPlayerTest implements CardConstants {
 
     private ComputerPlayer testPlayer = new ComputerPlayer();
     private ComputerPlayer testPlayer2 = new ComputerPlayer();
@@ -33,11 +33,11 @@ public class ComputerPlayerTest {
     @Test //AI should discard King
     public void makeMove() {
         System.out.println("Test 1");
-        testPlayer.takeCard(new Card('K','H'));
-        testPlayer.takeCard(new Card('T','D'));
-        testPlayer.takeCard(new Card('T','C'));
-        testPlayer.takeCard(new Card('4','S'));
-        testPlayer.takeCard(new Card('4','D'));
+        testPlayer.takeCard(new Card(KING,HEARTS));
+        testPlayer.takeCard(new Card(TEN,DIAMONDS));
+        testPlayer.takeCard(new Card(TEN,CLUBS));
+        testPlayer.takeCard(new Card(FOUR,SPADES));
+        testPlayer.takeCard(new Card(FOUR,DIAMONDS));
         testPlayer.sortHand();
         System.out.print("Initial hand: ");
         testPlayer.printHand();
@@ -50,11 +50,11 @@ public class ComputerPlayerTest {
     public void makeMove2() {
 
         System.out.println("Test 2");
-        testPlayer.takeCard(new Card('K','H'));
-        testPlayer.takeCard(new Card('K','D'));
-        testPlayer.takeCard(new Card('T','C'));
-        testPlayer.takeCard(new Card('T','S'));
-        testPlayer.takeCard(new Card('4','D'));
+        testPlayer.takeCard(new Card(KING,HEARTS));
+        testPlayer.takeCard(new Card(KING,DIAMONDS));
+        testPlayer.takeCard(new Card(TEN,CLUBS));
+        testPlayer.takeCard(new Card(TEN,SPADES));
+        testPlayer.takeCard(new Card(FOUR,DIAMONDS));
         testPlayer.sortHand();
         System.out.print("Initial hand: ");
         testPlayer.printHand();
@@ -68,11 +68,11 @@ public class ComputerPlayerTest {
     public void makeMove3() {
 
         System.out.println("Test 3");
-        testPlayer.takeCard(new Card('K','H'));
-        testPlayer.takeCard(new Card('K','D'));
-        testPlayer.takeCard(new Card('T','C'));
-        testPlayer.takeCard(new Card('4','S'));
-        testPlayer.takeCard(new Card('4','D'));
+        testPlayer.takeCard(new Card(KING,HEARTS));
+        testPlayer.takeCard(new Card(KING,DIAMONDS));
+        testPlayer.takeCard(new Card(TEN,CLUBS));
+        testPlayer.takeCard(new Card(FOUR,SPADES));
+        testPlayer.takeCard(new Card(FOUR,DIAMONDS));
         testPlayer.sortHand();
         System.out.print("Initial hand: ");
         testPlayer.printHand();
@@ -86,11 +86,11 @@ public class ComputerPlayerTest {
     public void makeMove4() {
 
         System.out.println("Test 4");
-        testPlayer.takeCard(new Card('K','H'));
-        testPlayer.takeCard(new Card('T','D'));
-        testPlayer.takeCard(new Card('T','C'));
-        testPlayer.takeCard(new Card('T','S'));
-        testPlayer.takeCard(new Card('4','D'));
+        testPlayer.takeCard(new Card(KING,HEARTS));
+        testPlayer.takeCard(new Card(TEN,DIAMONDS));
+        testPlayer.takeCard(new Card(TEN,CLUBS));
+        testPlayer.takeCard(new Card(TEN,SPADES));
+        testPlayer.takeCard(new Card(TEN,DIAMONDS));
         testPlayer.sortHand();
         System.out.print("Initial hand: ");
         testPlayer.printHand();
@@ -104,11 +104,11 @@ public class ComputerPlayerTest {
     public void makeMove5() {
 
         System.out.println("Test 5");
-        testPlayer.takeCard(new Card('K','H'));
-        testPlayer.takeCard(new Card('T','D'));
-        testPlayer.takeCard(new Card('4','C'));
-        testPlayer.takeCard(new Card('4','S'));
-        testPlayer.takeCard(new Card('4','D'));
+        testPlayer.takeCard(new Card(KING,HEARTS));
+        testPlayer.takeCard(new Card(TEN,HEARTS));
+        testPlayer.takeCard(new Card(FOUR,HEARTS));
+        testPlayer.takeCard(new Card(FOUR,SPADES));
+        testPlayer.takeCard(new Card(FOUR,DIAMONDS));
         testPlayer.sortHand();
         testPlayer2.sortHand();
         System.out.print("Initial hand: ");
@@ -123,11 +123,11 @@ public class ComputerPlayerTest {
     public void makeMove6() {
 
         System.out.println("Test 6");
-        testPlayer.takeCard(new Card('K','D'));
-        testPlayer.takeCard(new Card('T','D'));
-        testPlayer.takeCard(new Card('4','C'));
-        testPlayer.takeCard(new Card('3','D'));
-        testPlayer.takeCard(new Card('2','D'));
+        testPlayer.takeCard(new Card(KING,DIAMONDS));
+        testPlayer.takeCard(new Card(TEN,DIAMONDS));
+        testPlayer.takeCard(new Card(FOUR,CLUBS));
+        testPlayer.takeCard(new Card(THREE,DIAMONDS));
+        testPlayer.takeCard(new Card(TWO,DIAMONDS));
         testPlayer.sortHand();
         System.out.print("Initial hand: ");
         testPlayer.printHand();
@@ -140,11 +140,11 @@ public class ComputerPlayerTest {
     public void makeMove7() {
 
         System.out.println("Test 7");
-        testPlayer.takeCard(new Card('K','D'));
-        testPlayer.takeCard(new Card('Q','S'));
-        testPlayer.takeCard(new Card('J','C'));
-        testPlayer.takeCard(new Card('T','H'));
-        testPlayer.takeCard(new Card('4','D'));
+        testPlayer.takeCard(new Card(KING,DIAMONDS));
+        testPlayer.takeCard(new Card(QUEEN,SPADES));
+        testPlayer.takeCard(new Card(JACK,CLUBS));
+        testPlayer.takeCard(new Card(TEN,HEARTS));
+        testPlayer.takeCard(new Card(FOUR,DIAMONDS));
         testPlayer.sortHand();
         System.out.print("Initial hand: ");
         testPlayer.printHand();
@@ -158,11 +158,11 @@ public class ComputerPlayerTest {
     @Test //AI should discard King - out of sequence
     public void makeMove8() {
         System.out.println("Test 8");
-        testPlayer.takeCard(new Card('K', 'D'));
-        testPlayer.takeCard(new Card('J', 'S'));
-        testPlayer.takeCard(new Card('T', 'C'));
-        testPlayer.takeCard(new Card('9', 'H'));
-        testPlayer.takeCard(new Card('8', 'D'));
+        testPlayer.takeCard(new Card(KING, DIAMONDS));
+        testPlayer.takeCard(new Card(JACK, SPADES));
+        testPlayer.takeCard(new Card(TEN, CLUBS));
+        testPlayer.takeCard(new Card(NINE, HEARTS));
+        testPlayer.takeCard(new Card(EIGHT, DIAMONDS));
         testPlayer.sortHand();
         System.out.print("Initial hand: ");
         testPlayer.printHand();

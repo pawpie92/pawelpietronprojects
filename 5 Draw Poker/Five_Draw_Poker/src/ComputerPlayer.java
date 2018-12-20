@@ -5,10 +5,10 @@
  */
 
 
-import java.util.ArrayList;
+
 import java.util.Stack;
 
-public class ComputerPlayer extends UserPlayer {
+public class ComputerPlayer extends UserPlayer implements CardConstants{
     private Evaluator evaluator = new Evaluator();
     private int cardsDiscarded = 0;
 
@@ -160,7 +160,7 @@ public class ComputerPlayer extends UserPlayer {
             if(skipCard)
                 continue;
             //Exception check for 5 4 3 2 A sequence and skip the card due to sort by value
-            if(card.getRank() == 'A' && hand.get(hand.size() - 1).getRank() == '2'){
+            if(card.getRank() == ACE && hand.get(hand.size() - 1).getRank() == '2'){
                 index++;
                 continue;
             }
