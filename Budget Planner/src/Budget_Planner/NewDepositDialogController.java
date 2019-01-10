@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 

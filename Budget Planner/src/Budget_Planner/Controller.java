@@ -1,31 +1,22 @@
 package Budget_Planner;
 
-import Budget_Planner.Model.DataConstants;
 import Budget_Planner.Model.DataSource;
 import Budget_Planner.Model.Transaction;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Observable;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 public class Controller {
 
@@ -55,22 +46,6 @@ public class Controller {
 
     @FXML
     private RadioMenuItem paymentsOnly;
-
-    @FXML
-    private RadioMenuItem showAll;
-
-    @FXML
-    private StackedAreaChart<Month, Double> yearSummaryChart;
-
-
-    private FilteredList<Transaction> transactionList;
-
-    private Predicate<Transaction> wantAllTransactions;
-    private Predicate<Transaction> onlyDeposits;
-    private Predicate<Transaction> onlyPayments;
-
-
-
 
     @FXML
     public void aboutDialogHandle(){

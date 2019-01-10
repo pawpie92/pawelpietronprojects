@@ -1,7 +1,5 @@
 package Budget_Planner.Model;
 
-import javafx.collections.ObservableList;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
