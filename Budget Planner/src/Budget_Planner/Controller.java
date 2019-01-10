@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Observable;
@@ -71,6 +72,23 @@ public class Controller {
 
 
 
+    @FXML
+    public void aboutDialogHandle(){
+        Alert about = new Alert(Alert.AlertType.INFORMATION);
+        about.setTitle("About...");
+        about.setHeaderText("Application instructions: ");
+        about.setContentText("\n" +
+                "Budget Planner for people who wants organise their budget.\n" +
+                "\n\n" +
+                "By Pawel Pietron." +
+                "\n\n" +
+                "If you want to delete record from table, simply select the record and press delete button." +
+                "\n\n" +
+                "To Create new transaction in table please go to new -> Deposit/Payment." +
+                "\n\n" +
+                "If you wish to filter view to only see deposits or payments please go to Edit -> View Preferences to choose preference.");
+        about.showAndWait();
+    }
 
     @FXML
     public void handleExit(){
@@ -90,9 +108,10 @@ public class Controller {
         double deposits = DataSource.getInstance().depositSumQuery(startDate.getValue(), endDate.getValue());
         double payments = DataSource.getInstance().paymentSumQuery(startDate.getValue(), endDate.getValue());
         double balances = deposits - payments;
-        depositsSum.setText(Double.toString(deposits) + "$");
-        paymentSum.setText(Double.toString(payments) + "$");
-        balanceSum.setText(Double.toString(balances) + "$");
+        DecimalFormat df = new DecimalFormat("#####.##");
+        depositsSum.setText(df.format(deposits) + "$");
+        paymentSum.setText(df.format(payments) + "$");
+        balanceSum.setText(df.format(balances) + "$");
         if(balances < 0.0)
             balanceSum.setTextFill(Color.RED);
         else if(balances > 0.0)
