@@ -17,7 +17,7 @@ public class Main extends Application {
         Controller controller = loader.getController();
         controller.listTransactions();
         primaryStage.setTitle("Budget Planner");
-        primaryStage.setScene(new Scene(root, 1000, 700));
+        primaryStage.setScene(new Scene(root, 375, 600));
         primaryStage.show();
     }
 

@@ -4,7 +4,6 @@
 <?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.StackedAreaChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -40,7 +39,7 @@
          </padding>
       </AreaChart>
    </children>
-   <left>
+   <center>
       <HBox BorderPane.alignment="CENTER">
          <children>
             <VBox>
@@ -157,10 +156,10 @@
                   </TableView>
                </children>
             </VBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Separator orientation="VERTICAL" prefHeight="250.0" visible="false" />
          </children>
       </HBox>
-   </left>
+   </center>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -172,7 +171,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#showNewPaymentDialog" text="Payment" />
                     </items>
                   </Menu>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -197,14 +196,4 @@
         </menus>
       </MenuBar>
    </top>
-   <center>
-      <StackedAreaChart BorderPane.alignment="CENTER">
-        <xAxis>
-          <NumberAxis label="Days" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis label="\$" prefHeight="373.0" prefWidth="16.0" side="LEFT" />
-        </yAxis>
-      </StackedAreaChart>
-   </center>
 </BorderPane>

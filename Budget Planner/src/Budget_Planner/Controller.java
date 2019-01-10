@@ -3,12 +3,15 @@ package Budget_Planner;
 import Budget_Planner.Model.DataConstants;
 import Budget_Planner.Model.DataSource;
 import Budget_Planner.Model.Transaction;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -18,6 +21,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Observable;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -54,7 +58,8 @@ public class Controller {
     @FXML
     private RadioMenuItem showAll;
 
-
+    @FXML
+    private StackedAreaChart<Month, Double> yearSummaryChart;
 
 
     private FilteredList<Transaction> transactionList;
@@ -64,8 +69,13 @@ public class Controller {
     private Predicate<Transaction> onlyPayments;
 
 
-    //TODO: handling multiple gui elements: CheckBoxMenu, Labels for summaries
 
+
+
+    @FXML
+    public void handleExit(){
+        Platform.exit();
+    }
 
     @FXML
     public void listTransactions() {
