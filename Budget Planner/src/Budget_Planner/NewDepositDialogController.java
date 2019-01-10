@@ -21,8 +21,9 @@ public class NewDepositDialogController {
     private DatePicker date;
 
     public void addDepositRecord(){
+        title.getText().replaceAll(".","\\.");
         String inTitle = title.getText().trim();
-        double inAmount = Double.parseDouble(amount.getText());
+        double inAmount = Double.parseDouble(amount.getText().replaceAll(",","\\."));
         LocalDate inDate = date.getValue();
 
 

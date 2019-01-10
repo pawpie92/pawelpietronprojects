@@ -25,8 +25,9 @@ public class NewPaymentDialogController {
 
 
     public void addPaymentRecord(){
+        title.getText().replaceAll(".","\\.");
         String inTitle = title.getText().trim();
-        double inAmount = Double.parseDouble(amount.getText());
+        double inAmount = Double.parseDouble(amount.getText().replaceAll(",","\\."));
         LocalDate inDate = date.getValue();
 
         if(inTitle.isEmpty() || amount.getText().isEmpty() || date.getValue() == null)

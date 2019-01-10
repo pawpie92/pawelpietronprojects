@@ -16,6 +16,8 @@
       <element id="archive" name="Budget_Planner.jar">
         <element id="module-output" name="Budget Planner" />
       </element>
+      <element id="library" level="project" name="sqlite-jdbc-3.23.1" />
+      <element id="library" level="application" name="JavaFX-11" />
     </root>
   </artifact>
 </component>

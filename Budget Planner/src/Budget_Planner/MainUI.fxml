@@ -67,17 +67,17 @@
                         </VBox>
                         <VBox prefHeight="93.0" prefWidth="112.0">
                            <children>
-                              <Label fx:id="depositsSum" prefHeight="41.0" prefWidth="86.0" style="-fx-text-fill: green;" text="0$">
+                              <Label fx:id="depositsSum" prefHeight="41.0" prefWidth="112.0" style="-fx-text-fill: green;" text="0$">
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="paymentSum" prefHeight="46.0" prefWidth="92.0" style="-fx-text-fill: red;" text="0$">
+                              <Label fx:id="paymentSum" prefHeight="46.0" prefWidth="112.0" style="-fx-text-fill: red;" text="0$">
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="balanceSum" prefHeight="42.0" prefWidth="49.0" text="0$">
+                              <Label fx:id="balanceSum" prefHeight="42.0" prefWidth="112.0" text="0$">
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font>
