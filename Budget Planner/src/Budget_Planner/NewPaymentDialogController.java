@@ -1,9 +1,11 @@
 package Budget_Planner;
 
+import Budget_Planner.Model.DataConstants;
+import Budget_Planner.Model.DataSource;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class NewPaymentDialogController {
@@ -12,25 +14,29 @@ public class NewPaymentDialogController {
     private TextField title;
 
     @FXML
-    private TextField ammount;
+    private TextField amount;
 
     @FXML
     private DatePicker date;
 
+    @FXML
+    private Button ok;
+
+
+
     public void addPaymentRecord(){
         String inTitle = title.getText().trim();
-        if(inTitle.isEmpty())
-            inTitle = "Empty Record";
-        double inAmmount;
-        if(ammount.getText().isEmpty())
-            inAmmount = 0.0;
-        else
-            inAmmount = Double.parseDouble(ammount.getText());
-        LocalDate inDate;
-        if(date.getValue() == null)
-            inDate = LocalDate.now();
-        else
-            inDate = date.getValue();
-        System.out.println("Payment record " + inTitle + ", " + inAmmount + ", " + inDate + " has been entered to database");
+        double inAmount = Double.parseDouble(amount.getText());
+        LocalDate inDate = date.getValue();
+
+        if(inTitle.isEmpty() || amount.getText().isEmpty() || date.getValue() == null)
+            return;
+        try
+        {
+            DataSource.getInstance().addTransaction(inTitle, inAmount, inDate, DataConstants.PAYMENT);
+        }
+        catch (SQLException e){
+            System.err.println("Payment insertion failure: " + e.getMessage());
+        }
     }
 }

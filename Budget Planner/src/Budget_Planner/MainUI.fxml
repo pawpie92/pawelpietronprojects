@@ -15,6 +15,8 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -66,17 +68,17 @@
                         </VBox>
                         <VBox prefHeight="56.0" prefWidth="62.0">
                            <children>
-                              <Label prefHeight="40.0" prefWidth="14.0" style="-fx-text-fill: green;" text="0$">
+                              <Label fx:id="depositsSum" prefHeight="41.0" prefWidth="86.0" style="-fx-text-fill: green;" text="0$">
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font>
                               </Label>
-                              <Label prefHeight="43.0" prefWidth="14.0" style="-fx-text-fill: red;" text="0$">
+                              <Label fx:id="paymentSum" prefHeight="46.0" prefWidth="92.0" style="-fx-text-fill: red;" text="0$">
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font>
                               </Label>
-                              <Label prefHeight="40.0" prefWidth="14.0" text="0$">
+                              <Label fx:id="balanceSum" prefHeight="42.0" prefWidth="49.0" text="0$">
                                  <font>
                                     <Font name="Times New Roman" size="14.0" />
                                  </font>
@@ -102,8 +104,8 @@
                         </VBox>
                         <VBox prefHeight="56.0" prefWidth="150.0">
                            <children>
-                              <DatePicker prefHeight="25.0" prefWidth="154.0" />
-                              <DatePicker>
+                              <DatePicker fx:id="startDate" prefHeight="25.0" prefWidth="154.0" />
+                              <DatePicker fx:id="endDate">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -111,7 +113,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </DatePicker>
-                              <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="150.0" text="Run">
+                              <Button fx:id="run" mnemonicParsing="false" onAction="#listTransactions" prefHeight="27.0" prefWidth="150.0" text="Run">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
@@ -123,17 +125,34 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <Separator prefWidth="200.0" />
+                  <Separator prefHeight="12.0" prefWidth="371.0" visible="false" />
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="370.0" text="Balance History:">
                      <font>
                         <Font name="Times New Roman" size="22.0" />
                      </font>
                   </Label>
-                  <TableView prefHeight="633.0" prefWidth="371.0">
+                  <TableView fx:id="tableView" onKeyPressed="#handleKeyPressed" prefHeight="633.0" prefWidth="371.0">
                     <columns>
-                      <TableColumn prefWidth="197.1999785900116" text="Title" />
-                      <TableColumn prefWidth="85.20005798339844" text="Ammount" />
-                        <TableColumn prefWidth="88.79998779296875" text="Date" />
+                      <TableColumn prefWidth="120.80005037784576" styleClass="-fx-alignment: center" text="Title">
+                          <cellValueFactory>
+                              <PropertyValueFactory property="title" />
+                          </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn prefWidth="89.5999984741211" styleClass="-fx-alignment: center" text="Amount">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="amount" />
+                        </cellValueFactory>
+                      </TableColumn>
+                        <TableColumn prefWidth="77.20004272460938" styleClass="-fx-alignment: center" text="Date">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="date" />
+                        </cellValueFactory>
+                    </TableColumn>
+                        <TableColumn prefWidth="82.39996337890625" styleClass="-fx-alignment: center" text="Type">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="type" />
+                      </cellValueFactory>
+                  </TableColumn>
                     </columns>
                   </TableView>
                </children>
@@ -160,12 +179,14 @@
             <items>
                   <Menu mnemonicParsing="false" text="View Preferences">
                      <items>
-                        <RadioMenuItem mnemonicParsing="false" text="Deposits only" />
-                        <RadioMenuItem mnemonicParsing="false" text="Payments only" />
-                        <RadioMenuItem mnemonicParsing="false" selected="true" text="Show All" />
+                        <RadioMenuItem fx:id="depositsOnly" mnemonicParsing="false" onAction="#listTransactions" text="Deposits only">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="filterToggleGroup" />
+                           </toggleGroup></RadioMenuItem>
+                        <RadioMenuItem fx:id="paymentsOnly" mnemonicParsing="false" onAction="#listTransactions" text="Payments only" toggleGroup="$filterToggleGroup" />
+                        <RadioMenuItem fx:id="showAll" mnemonicParsing="false" onAction="#listTransactions" selected="true" text="Show All" toggleGroup="$filterToggleGroup" />
                      </items>
                   </Menu>
-              <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
