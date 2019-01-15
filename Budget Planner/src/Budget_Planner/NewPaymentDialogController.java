@@ -10,8 +10,6 @@ import java.time.LocalDate;
 
 public class NewPaymentDialogController {
 
-    @FXML
-    private TextField title;
 
     @FXML
     private TextField amount;
@@ -19,11 +17,17 @@ public class NewPaymentDialogController {
     @FXML
     private DatePicker date;
 
+    @FXML
+    private ComboBox<String> comboTitle;
+
+    public void initializeTitleList(){
+        comboTitle.setEditable(true);
+        comboTitle.getItems().addAll(DataSource.getInstance().querryTittlesPayments());
+    }
 
 
     public void addPaymentRecord(String account){
-        title.getText().replaceAll(".","\\.");
-        String inTitle = title.getText().trim();
+        String inTitle = comboTitle.getSelectionModel().getSelectedItem();
         double inAmount = Double.parseDouble(amount.getText().replaceAll(",","\\."));
         LocalDate inDate = date.getValue();
 

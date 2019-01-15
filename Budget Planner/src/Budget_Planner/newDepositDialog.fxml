@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<DialogPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Budget_Planner.NewDepositDialogController"
-            prefHeight="150.0" prefWidth="300.0">
+<DialogPane prefHeight="150.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Budget_Planner.NewDepositDialogController">
     <content>
-        <GridPane vgap="10" hgap="10">
-            <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="title" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-            <Label text="Amount($)" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextField fx:id="amount" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-            <Label text="Date" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <DatePicker fx:id="date" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <GridPane hgap="10" vgap="10">
+            <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label text="Amount($)" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="amount" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Date" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <DatePicker fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="comboTitle" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
     </content>
 

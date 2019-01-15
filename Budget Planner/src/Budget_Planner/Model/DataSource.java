@@ -6,7 +6,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.*;
@@ -27,8 +26,11 @@ public class DataSource implements DataConstants{
     private PreparedStatement deleteTransaction;
     private PreparedStatement showDeposits;
     private PreparedStatement showPayments;
-    private PreparedStatement loookUpAccount;
+    private PreparedStatement lookUpAccount;
     private PreparedStatement createAccount;
+    private PreparedStatement queryTittlesDeposits;
+    private PreparedStatement queryTittlesPayments;
+
 
     private static DataSource instance = new DataSource();
     private DataSource(){
@@ -48,7 +50,7 @@ public class DataSource implements DataConstants{
             initTransactionTable.executeUpdate();
             initAccountTable = con.prepareStatement(CREATE_ACCOUNT_TABLE);
             initAccountTable.executeUpdate();
-            loookUpAccount = con.prepareStatement(ACCOUNT_LOOKUP);
+            lookUpAccount = con.prepareStatement(ACCOUNT_LOOKUP);
             createAccount = con.prepareStatement(INSERT_ACCOUNT);
             insertTransaction = con.prepareStatement(INSERT_TRANSACTION);
             showTransactionPeriod = con.prepareStatement(SHOW_TRANSACTIONS);
@@ -57,6 +59,9 @@ public class DataSource implements DataConstants{
             deleteTransaction = con.prepareStatement(DELETE_TRANSACTION);
             showDeposits = con.prepareStatement(SHOW_DEPOSITS);
             showPayments = con.prepareStatement(SHOW_PAYMENTS);
+            queryTittlesDeposits = con.prepareStatement(SHOW_TITLES_DEPOSITS);
+            queryTittlesPayments = con.prepareStatement(SHOW_TITLES_PAYMENTS);
+
             return true;
 
         } catch (SQLException e){
@@ -71,8 +76,8 @@ public class DataSource implements DataConstants{
                 initTransactionTable.close();
             if(initAccountTable != null)
                 initAccountTable.close();
-            if(loookUpAccount != null)
-                loookUpAccount.close();
+            if(lookUpAccount != null)
+                lookUpAccount.close();
             if(createAccount != null)
                 createAccount.close();
             if(insertTransaction != null)
@@ -89,6 +94,10 @@ public class DataSource implements DataConstants{
                 showDeposits.close();
             if(showPayments != null)
                 showPayments.close();
+            if(queryTittlesDeposits != null)
+                queryTittlesDeposits.close();
+            if(queryTittlesPayments != null)
+                queryTittlesPayments.close();
             if(con != null)
                 con.close();
         }
@@ -107,12 +116,52 @@ public class DataSource implements DataConstants{
             }
     }
 
+    public List<String> querryTittlesDeposits(){
+        List<String> titles = new ArrayList<String>();
+        try{
+
+            ResultSet results = queryTittlesDeposits.executeQuery();
+            while(results.next())
+            {
+                String title = results.getString(1);
+                System.out.println(title);
+                titles.add(title);
+            }
+            return titles;
+        }
+        catch (SQLException e){
+            System.err.println("Error in listing titles from DB: " + e.getMessage());
+            return null;
+        }
+    }
+
+
+    public List<String> querryTittlesPayments(){
+        List<String> titles = new ArrayList<String>();
+        try{
+
+            ResultSet results = queryTittlesPayments.executeQuery();
+            while(results.next())
+            {
+
+                String title = results.getString(1);
+                System.out.println(title);
+                titles.add(title);
+            }
+            return titles;
+        }
+        catch (SQLException e){
+            System.err.println("Error in listing titles from DB: " + e.getMessage());
+            return null;
+        }
+    }
+
     public Account accountLookup(String login){
         try
         {
             Account account = new Account();
-            loookUpAccount.setString(1,login);
-            ResultSet result = loookUpAccount.executeQuery();
+            lookUpAccount.setString(1,login);
+            ResultSet result = lookUpAccount.executeQuery();
             if(result.next())
             {
                 account.setUserID(result.getString(COLUMN_ACCOUNT_LOGIN));

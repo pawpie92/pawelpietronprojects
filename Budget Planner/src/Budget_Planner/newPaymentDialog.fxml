@@ -11,11 +11,11 @@
     <content>
         <GridPane vgap="10" hgap="10">
             <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="title" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
             <Label text="Amount($)" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
             <TextField fx:id="amount" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
             <Label text="Date" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
             <DatePicker fx:id="date" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <ComboBox fx:id="comboTitle" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" />
         </GridPane>
     </content>
 </DialogPane>

@@ -177,10 +177,10 @@ public class Controller {
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-
+        NewPaymentDialogController controller = loader.getController();
+        controller.initializeTitleList();
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            NewPaymentDialogController controller = loader.getController();
             controller.addPaymentRecord(currentUserID);
             listTransactions();
         }
@@ -203,9 +203,10 @@ public class Controller {
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        NewDepositDialogController controller = loader.getController();
+        controller.initializeTitleList();
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            NewDepositDialogController controller = loader.getController();
             controller.addDepositRecord(currentUserID);
             listTransactions();
         }
