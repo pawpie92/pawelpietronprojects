@@ -1,3 +1,3 @@
-Budget Planner for people who wants organise their budget.
+Budget Planner for people who want to organise their budget.
 
 By Pawel Pietron.
