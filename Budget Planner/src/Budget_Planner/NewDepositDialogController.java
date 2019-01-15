@@ -20,18 +20,20 @@ public class NewDepositDialogController {
     @FXML
     private DatePicker date;
 
-    public void addDepositRecord(){
+    public void addDepositRecord(String account){
         title.getText().replaceAll(".","\\.");
         String inTitle = title.getText().trim();
         double inAmount = Double.parseDouble(amount.getText().replaceAll(",","\\."));
         LocalDate inDate = date.getValue();
 
 
-        if(inTitle.isEmpty() || amount.getText().isEmpty() || date.getValue() == null)
+        if(inTitle.isEmpty() || amount.getText().isEmpty())
             return;
+        if(date.getValue() == null)
+            inDate = LocalDate.now();
         try
         {
-            DataSource.getInstance().addTransaction(inTitle, inAmount, inDate, DataConstants.DEPOSIT);
+            DataSource.getInstance().addTransaction(inTitle, inAmount, inDate, DataConstants.DEPOSIT, account);
         }
         catch (SQLException e){
             System.err.println("Payment insertion failure: " + e.getMessage());

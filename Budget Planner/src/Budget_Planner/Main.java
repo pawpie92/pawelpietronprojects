@@ -26,6 +26,7 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         super.init();
+
         if(!DataSource.getInstance().open())
         {
             System.err.println("ERROR: Couldn't connect to the database");;

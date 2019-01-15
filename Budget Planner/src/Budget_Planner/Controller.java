@@ -47,6 +47,50 @@ public class Controller {
     @FXML
     private RadioMenuItem paymentsOnly;
 
+    private String currentUserID;
+
+    private boolean loggedIn = false;
+
+    public String getCurrentUserID() { return currentUserID; }
+
+    public void setCurrentUserID(String currentUserID) { this.currentUserID = currentUserID; }
+
+
+    @FXML
+    public void initialize(){
+        while(!loggedIn){
+            Dialog<ButtonType> dialog = new Dialog();
+            dialog.setTitle("Welcome to Budget Planner");
+            dialog.setHeaderText("Please enter your credentials");
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("LoginUI.fxml"));
+            try {
+                dialog.getDialogPane().setContent(loader.load());
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+                e.printStackTrace();
+                return;
+            }
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+            Optional<ButtonType> result = dialog.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.CANCEL) {
+                Platform.exit();
+                break;
+            }
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                LoginUI controller = loader.getController();
+                if(controller.loginToBudget() != null){
+                    loggedIn = true;
+                    currentUserID = controller.loginToBudget().getUserID();
+                }
+
+                }
+        }
+
+    }
+
     @FXML
     public void aboutDialogHandle(){
         Alert about = new Alert(Alert.AlertType.INFORMATION);
@@ -80,8 +124,8 @@ public class Controller {
         else
             task  = new GetAllTransactionTask();
         tableView.itemsProperty().bind(task.valueProperty());
-        double deposits = DataSource.getInstance().depositSumQuery(startDate.getValue(), endDate.getValue());
-        double payments = DataSource.getInstance().paymentSumQuery(startDate.getValue(), endDate.getValue());
+        double deposits = DataSource.getInstance().depositSumQuery(startDate.getValue(), endDate.getValue(), currentUserID);
+        double payments = DataSource.getInstance().paymentSumQuery(startDate.getValue(), endDate.getValue(), currentUserID);
         double balances = deposits - payments;
         DecimalFormat df = new DecimalFormat("#####.##");
         depositsSum.setText(df.format(deposits) + "$");
@@ -137,7 +181,7 @@ public class Controller {
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             NewPaymentDialogController controller = loader.getController();
-            controller.addPaymentRecord();
+            controller.addPaymentRecord(currentUserID);
             listTransactions();
         }
     }
@@ -162,7 +206,7 @@ public class Controller {
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             NewDepositDialogController controller = loader.getController();
-            controller.addDepositRecord();
+            controller.addDepositRecord(currentUserID);
             listTransactions();
         }
     }
@@ -170,14 +214,14 @@ public class Controller {
     class GetAllTransactionTask extends Task {
         @Override
         public ObservableList<Transaction> call() {
-            return FXCollections.observableArrayList(DataSource.getInstance().queryTransactions(startDate.getValue(), endDate.getValue()));
+            return FXCollections.observableArrayList(DataSource.getInstance().queryTransactions(startDate.getValue(), endDate.getValue(), currentUserID));
         }
     }
 
     class GetDepositsOnly extends Task{
         @Override
         public ObservableList<Transaction> call() {
-            return FXCollections.observableArrayList(DataSource.getInstance().queryDeposits(startDate.getValue(), endDate.getValue()));
+            return FXCollections.observableArrayList(DataSource.getInstance().queryDeposits(startDate.getValue(), endDate.getValue(), currentUserID));
 
         }
     }
@@ -185,7 +229,7 @@ public class Controller {
     class GetPaymentsOnly extends Task{
         @Override
         public ObservableList<Transaction> call() {
-            return FXCollections.observableArrayList(DataSource.getInstance().queryPayments(startDate.getValue(), endDate.getValue()));
+            return FXCollections.observableArrayList(DataSource.getInstance().queryPayments(startDate.getValue(), endDate.getValue(), currentUserID));
 
         }
     }

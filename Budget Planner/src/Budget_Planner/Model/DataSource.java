@@ -1,5 +1,14 @@
 package Budget_Planner.Model;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,16 +18,17 @@ public class DataSource implements DataConstants{
 
     private Connection con;
 
-    private PreparedStatement initTable;
+    private PreparedStatement initTransactionTable;
+    private PreparedStatement initAccountTable;
     private PreparedStatement insertTransaction;
     private PreparedStatement showTransactionPeriod;
     private PreparedStatement depositSummary;
     private PreparedStatement paymentSummary;
-    private PreparedStatement yearSummary;
     private PreparedStatement deleteTransaction;
     private PreparedStatement showDeposits;
     private PreparedStatement showPayments;
-
+    private PreparedStatement loookUpAccount;
+    private PreparedStatement createAccount;
 
     private static DataSource instance = new DataSource();
     private DataSource(){
@@ -34,13 +44,16 @@ public class DataSource implements DataConstants{
         try{
 
             con = DriverManager.getConnection(CONNECTION_STRING);
-            initTable = con.prepareStatement(CREATE_TRANSACTION_TABLE);
-            initTable.executeUpdate();
+            initTransactionTable = con.prepareStatement(CREATE_TRANSACTION_TABLE);
+            initTransactionTable.executeUpdate();
+            initAccountTable = con.prepareStatement(CREATE_ACCOUNT_TABLE);
+            initAccountTable.executeUpdate();
+            loookUpAccount = con.prepareStatement(ACCOUNT_LOOKUP);
+            createAccount = con.prepareStatement(INSERT_ACCOUNT);
             insertTransaction = con.prepareStatement(INSERT_TRANSACTION);
             showTransactionPeriod = con.prepareStatement(SHOW_TRANSACTIONS);
             depositSummary = con.prepareStatement(DEPOSIT_SUMMARY);
             paymentSummary = con.prepareStatement(PAYMENT_SUMMARY);
-            yearSummary = con.prepareStatement(YEAR_SUMMARY);
             deleteTransaction = con.prepareStatement(DELETE_TRANSACTION);
             showDeposits = con.prepareStatement(SHOW_DEPOSITS);
             showPayments = con.prepareStatement(SHOW_PAYMENTS);
@@ -54,14 +67,18 @@ public class DataSource implements DataConstants{
 
     public void close(){
         try{
-            if(initTable != null)
-                initTable.close();
+            if(initTransactionTable != null)
+                initTransactionTable.close();
+            if(initAccountTable != null)
+                initAccountTable.close();
+            if(loookUpAccount != null)
+                loookUpAccount.close();
+            if(createAccount != null)
+                createAccount.close();
             if(insertTransaction != null)
                 insertTransaction.close();
             if(showTransactionPeriod != null)
                 showTransactionPeriod.close();
-            if(yearSummary != null)
-                yearSummary.close();
             if(depositSummary != null)
                 depositSummary.close();
             if(paymentSummary != null)
@@ -80,13 +97,73 @@ public class DataSource implements DataConstants{
         }
     }
 
-    public void addTransaction(String title, double amount, LocalDate date, String type) throws SQLException{
+    public void createAccount(String login, String password) throws SQLException {
+            createAccount.setString(1,login);
+            createAccount.setString(2,password);
+            int affectedRows = createAccount.executeUpdate();
+
+            if( affectedRows != 1){
+                throw new SQLException("Transaction was not entered into database");
+            }
+    }
+
+    public Account accountLookup(String login){
+        try
+        {
+            Account account = new Account();
+            loookUpAccount.setString(1,login);
+            ResultSet result = loookUpAccount.executeQuery();
+            if(result.next())
+            {
+                account.setUserID(result.getString(COLUMN_ACCOUNT_LOGIN));
+                account.setPassword(result.getString(COLUMN_ACCOUNT_PASSWORD));
+                return account;
+            }
+            return null;
+        }
+        catch(SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Exception");
+            alert.setHeaderText("Exception - Account");
+            alert.setContentText("Cannot lookup this account" + e.getMessage());
+
+
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String exceptionText = sw.toString();
+
+            Label label = new Label("The exception stacktrace was:");
+
+            TextArea textArea = new TextArea(exceptionText);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+            return null;
+        }
+
+
+    }
+
+    public void addTransaction(String title, double amount, LocalDate date, String type, String account) throws SQLException{
 
         insertTransaction.setInt(1,insertTransaction.getGeneratedKeys().getInt(1));
         insertTransaction.setString(2, title);
         insertTransaction.setDouble(3, amount);
+        if(date == null)
+            insertTransaction.setDate(4,Date.valueOf(LocalDate.now()));
         insertTransaction.setDate(4, Date.valueOf(date));
         insertTransaction.setString(5, type);
+        insertTransaction.setString(6, account);
         int affectedRows = insertTransaction.executeUpdate();
 
         if( affectedRows != 1){
@@ -97,16 +174,52 @@ public class DataSource implements DataConstants{
 
     public void deleteTransaction(Transaction transaction){
         try{
+
             deleteTransaction.setInt(1,transaction.getId());
             deleteTransaction.executeUpdate();
 
         }catch(SQLException e){
             System.err.println("Cannot delete this record:" + e.getMessage());
+            System.err.println("Something went wrong: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Exception");
+            alert.setHeaderText("Exception - Transaction");
+            alert.setContentText("Cannot delete this record:" + e.getMessage());
+
+
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String exceptionText = sw.toString();
+
+            Label label = new Label("The exception stacktrace was:");
+
+            TextArea textArea = new TextArea(exceptionText);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+
+
+            alert.getDialogPane().setExpandableContent(expContent);
+
+            alert.showAndWait();
         }
     }
 
+    public void addAccount(String login, String password){
 
-    public List<Transaction> queryTransactions(LocalDate start, LocalDate end){
+    }
+
+    public List<Transaction> queryTransactions(LocalDate start, LocalDate end, String account){
 
 
         List<Transaction> transactions = new ArrayList<Transaction>();
@@ -121,24 +234,59 @@ public class DataSource implements DataConstants{
         {
             showTransactionPeriod.setDate(1, Date.valueOf(start));
             showTransactionPeriod.setDate(2, Date.valueOf(end));
+            showTransactionPeriod.setString(3, account);
+
             ResultSet results = showTransactionPeriod.executeQuery();
             while(results.next()){
                 Transaction transaction = new Transaction();
-                transaction.setTitle(results.getString(COLUMN_TITLE));
-                transaction.setAmount(results.getDouble(COLUMN_AMOUNT));
-                transaction.setDate(results.getDate(COLUMN_DATE));
-                transaction.setType(results.getString(COLUMN_TYPE));
+                transaction.setId(results.getInt(COLUMN_TRANSACTIONS_ID));
+                transaction.setTitle(results.getString(COLUMN_TRANSACTIONS_TITLE));
+                transaction.setAmount(results.getDouble(COLUMN_TRANSACTIONS_AMOUNT));
+                transaction.setDate(results.getDate(COLUMN_TRANSACTIONS_DATE));
+                transaction.setType(results.getString(COLUMN_TRANSACTIONS_TYPE));
+                transaction.setAccount(results.getString(COLUMN_TRANSACTIONS_ACCOUNT_ID));
                 transactions.add(transaction);
             }
             return transactions;
         }
         catch (SQLException e){
             System.err.println("Something went wrong: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Exception");
+            alert.setHeaderText("Exception - Transaction");
+            alert.setContentText("Something went wrong in  queryTransaction: " + e.getMessage());
+
+
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String exceptionText = sw.toString();
+
+            Label label = new Label("The exception stacktrace was:");
+
+            TextArea textArea = new TextArea(exceptionText);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+
+
+            alert.getDialogPane().setExpandableContent(expContent);
+
+            alert.showAndWait();
             return null;
         }
     }
 
-    public List<Transaction> queryDeposits(LocalDate start, LocalDate end){
+    public List<Transaction> queryDeposits(LocalDate start, LocalDate end, String account){
 
 
         List<Transaction> transactions = new ArrayList<Transaction>();
@@ -153,23 +301,57 @@ public class DataSource implements DataConstants{
         {
             showDeposits.setDate(1, Date.valueOf(start));
             showDeposits.setDate(2, Date.valueOf(end));
+            showTransactionPeriod.setString(3, account);
+
             ResultSet results = showDeposits.executeQuery();
             while(results.next()){
                 Transaction transaction = new Transaction();
-                transaction.setTitle(results.getString(COLUMN_TITLE));
-                transaction.setAmount(results.getDouble(COLUMN_AMOUNT));
-                transaction.setDate(results.getDate(COLUMN_DATE));
-                transaction.setType(results.getString(COLUMN_TYPE));
+                transaction.setTitle(results.getString(COLUMN_TRANSACTIONS_TITLE));
+                transaction.setAmount(results.getDouble(COLUMN_TRANSACTIONS_AMOUNT));
+                transaction.setDate(results.getDate(COLUMN_TRANSACTIONS_DATE));
+                transaction.setType(results.getString(COLUMN_TRANSACTIONS_TYPE));
+                transaction.setAccount(results.getString(COLUMN_TRANSACTIONS_ACCOUNT_ID));
                 transactions.add(transaction);
             }
             return transactions;
         }
         catch (SQLException e){
             System.err.println("Something went wrong: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Exception");
+            alert.setHeaderText("Exception - Deposit");
+            alert.setContentText("Something went wrong in  queryDeposits: " + e.getMessage());
+
+
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String exceptionText = sw.toString();
+
+            Label label = new Label("The exception stacktrace was:");
+
+            TextArea textArea = new TextArea(exceptionText);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+
+
+            alert.getDialogPane().setExpandableContent(expContent);
+
+            alert.showAndWait();
             return null;
         }
     }
-    public List<Transaction> queryPayments(LocalDate start, LocalDate end){
+    public List<Transaction> queryPayments(LocalDate start, LocalDate end, String account){
 
 
         List<Transaction> transactions = new ArrayList<Transaction>();
@@ -184,25 +366,59 @@ public class DataSource implements DataConstants{
         {
             showPayments.setDate(1, Date.valueOf(start));
             showPayments.setDate(2, Date.valueOf(end));
+            showTransactionPeriod.setString(3, account);
+
             ResultSet results = showPayments.executeQuery();
             while(results.next()){
                 Transaction transaction = new Transaction();
-                transaction.setTitle(results.getString(COLUMN_TITLE));
-                transaction.setAmount(results.getDouble(COLUMN_AMOUNT));
-                transaction.setDate(results.getDate(COLUMN_DATE));
-                transaction.setType(results.getString(COLUMN_TYPE));
+                transaction.setTitle(results.getString(COLUMN_TRANSACTIONS_TITLE));
+                transaction.setAmount(results.getDouble(COLUMN_TRANSACTIONS_AMOUNT));
+                transaction.setDate(results.getDate(COLUMN_TRANSACTIONS_DATE));
+                transaction.setType(results.getString(COLUMN_TRANSACTIONS_TYPE));
+                transaction.setAccount(results.getString(COLUMN_TRANSACTIONS_ACCOUNT_ID));
                 transactions.add(transaction);
             }
             return transactions;
         }
         catch (SQLException e){
-            System.err.println("Something went wrong: " + e.getMessage());
+            System.err.println("Something went wrong in  queryPayments: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Exception");
+            alert.setHeaderText("Exception - Payment");
+            alert.setContentText("Something went wrong in  queryPayments: " + e.getMessage());
+
+
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String exceptionText = sw.toString();
+
+            Label label = new Label("The exception stacktrace was:");
+
+            TextArea textArea = new TextArea(exceptionText);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+
+
+            alert.getDialogPane().setExpandableContent(expContent);
+
+            alert.showAndWait();
             return null;
         }
     }
 
 
-    public double depositSumQuery(LocalDate start, LocalDate end){
+    public double depositSumQuery(LocalDate start, LocalDate end, String account){
         double depositsum = 0.0;
 
         if(start == null || end == null)
@@ -214,19 +430,52 @@ public class DataSource implements DataConstants{
         try{
             depositSummary.setDate(1,Date.valueOf(start));
             depositSummary.setDate(2,Date.valueOf(end));
+            depositSummary.setString(3,account);
+
             ResultSet result = depositSummary.executeQuery();
             if(result.next())
                 depositsum = result.getDouble(1);
         }
         catch (SQLException e){
             System.err.println("Couldn't return sum for deposits: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Exception");
+            alert.setHeaderText("Exception  - Deposit");
+            alert.setContentText("Couldn't return sum for deposits: " + e.getMessage());
+
+
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String exceptionText = sw.toString();
+
+            Label label = new Label("The exception stacktrace was:");
+
+            TextArea textArea = new TextArea(exceptionText);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+
+
+            alert.getDialogPane().setExpandableContent(expContent);
+
+            alert.showAndWait();
         }
         finally {
             return depositsum;
         }
     }
 
-    public double paymentSumQuery(LocalDate start, LocalDate end){
+    public double paymentSumQuery(LocalDate start, LocalDate end, String account){
         double paymentsum = 0.0;
 
         if(start == null || end == null)
@@ -238,12 +487,44 @@ public class DataSource implements DataConstants{
         try{
             paymentSummary.setDate(1,Date.valueOf(start));
             paymentSummary.setDate(2,Date.valueOf(end));
+            paymentSummary.setString(3,account);
             ResultSet result = paymentSummary.executeQuery();
             if(result.next())
                 paymentsum = result.getDouble(1);
         }
         catch (SQLException e){
-            System.err.println("Couldn't return sum for deposits: " + e.getMessage());
+            System.err.println("Couldn't return sum for payments: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Exception");
+            alert.setHeaderText("Exception - Payment");
+            alert.setContentText("Couldn't return sum for payments: " + e.getMessage());
+
+
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String exceptionText = sw.toString();
+
+            Label label = new Label("The exception stacktrace was:");
+
+            TextArea textArea = new TextArea(exceptionText);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+
+
+            alert.getDialogPane().setExpandableContent(expContent);
+
+            alert.showAndWait();
         }
         finally {
             return paymentsum;

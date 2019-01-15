@@ -132,22 +132,23 @@
                   </Label>
                   <TableView fx:id="tableView" onKeyPressed="#handleKeyPressed" prefHeight="633.0" prefWidth="371.0">
                     <columns>
-                      <TableColumn prefWidth="120.80005037784576" styleClass="-fx-alignment: center" text="Title">
+                        <TableColumn minWidth="0.0" prefWidth="0.0" text="Id" />
+                      <TableColumn prefWidth="126.79998934268951" styleClass="-fx-alignment: center" text="Title">
                           <cellValueFactory>
                               <PropertyValueFactory property="title" />
                           </cellValueFactory>
                       </TableColumn>
-                      <TableColumn prefWidth="142.39995574951172" styleClass="-fx-alignment: center" text="Amount">
+                      <TableColumn prefWidth="135.60002899169922" styleClass="-fx-alignment: center" text="Amount">
                         <cellValueFactory>
                             <PropertyValueFactory property="amount" />
                         </cellValueFactory>
                       </TableColumn>
-                        <TableColumn prefWidth="73.20001220703125" styleClass="-fx-alignment: center" text="Date">
+                        <TableColumn prefWidth="81.5999755859375" styleClass="-fx-alignment: center" text="Date">
                         <cellValueFactory>
                             <PropertyValueFactory property="date" />
                         </cellValueFactory>
                     </TableColumn>
-                        <TableColumn prefWidth="80.39996337890625" styleClass="-fx-alignment: center" text="Type">
+                        <TableColumn prefWidth="74.4000244140625" styleClass="-fx-alignment: center" text="Type">
                       <cellValueFactory>
                           <PropertyValueFactory property="type" />
                       </cellValueFactory>
