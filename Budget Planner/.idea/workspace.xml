@@ -66,10 +66,12 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Budget_Planner/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="74" column="16" lean-forward="true" selection-start-line="74" selection-start-column="16" selection-end-line="74" selection-end-column="16" />
+            <state relative-caret-position="880">
+              <caret line="86" column="20" lean-forward="true" selection-start-line="86" selection-start-column="20" selection-end-line="86" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1296#1297#0" expanded="true" />
+                <element signature="e#1319#1320#0" expanded="true" />
                 <element signature="e#4853#4854#0" expanded="true" />
                 <element signature="e#4884#4885#0" expanded="true" />
               </folding>
@@ -369,7 +371,7 @@
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.2282668" side_tool="true" weight="0.30130547" />
       <window_info anchor="right" id="Maven Projects" order="8" />
       <window_info anchor="bottom" id="Version Control" order="14" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.77173316" weight="0.30130547" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.77173316" visible="true" weight="0.30130547" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Designer" order="0" />
@@ -513,6 +515,8 @@
           <caret line="69" column="48" lean-forward="true" selection-start-line="69" selection-start-column="48" selection-end-line="69" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1296#1297#0" expanded="true" />
+            <element signature="e#1319#1320#0" expanded="true" />
             <element signature="e#4853#4854#0" expanded="true" />
             <element signature="e#4884#4885#0" expanded="true" />
           </folding>
@@ -548,6 +552,8 @@
           <caret line="76" column="24" selection-start-line="76" selection-start-column="24" selection-end-line="76" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1296#1297#0" expanded="true" />
+            <element signature="e#1319#1320#0" expanded="true" />
             <element signature="e#4853#4854#0" expanded="true" />
             <element signature="e#4884#4885#0" expanded="true" />
           </folding>
@@ -693,6 +699,8 @@
           <caret line="50" column="33" lean-forward="true" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1296#1297#0" expanded="true" />
+            <element signature="e#1319#1320#0" expanded="true" />
             <element signature="e#4853#4854#0" expanded="true" />
             <element signature="e#4884#4885#0" expanded="true" />
           </folding>
@@ -720,6 +728,8 @@
           <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1296#1297#0" expanded="true" />
+            <element signature="e#1319#1320#0" expanded="true" />
             <element signature="e#4853#4854#0" expanded="true" />
             <element signature="e#4884#4885#0" expanded="true" />
           </folding>
@@ -864,10 +874,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Budget_Planner/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="74" column="16" lean-forward="true" selection-start-line="74" selection-start-column="16" selection-end-line="74" selection-end-column="16" />
+        <state relative-caret-position="880">
+          <caret line="86" column="20" lean-forward="true" selection-start-line="86" selection-start-column="20" selection-end-line="86" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1296#1297#0" expanded="true" />
+            <element signature="e#1319#1320#0" expanded="true" />
             <element signature="e#4853#4854#0" expanded="true" />
             <element signature="e#4884#4885#0" expanded="true" />
           </folding>

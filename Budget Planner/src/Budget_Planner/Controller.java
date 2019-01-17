@@ -82,7 +82,10 @@ public class Controller {
 
             Optional<ButtonType> result = dialog.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
-                Platform.exit();
+                if(currentUserID == null)
+                    Platform.exit();
+                else
+                    loggedIn = true;
                 break;
             }
             if (result.isPresent() && result.get() == ButtonType.OK){
