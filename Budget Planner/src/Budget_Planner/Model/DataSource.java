@@ -264,10 +264,6 @@ public class DataSource implements DataConstants{
         }
     }
 
-    public void addAccount(String login, String password){
-
-    }
-
     public List<Transaction> queryTransactions(LocalDate start, LocalDate end, String account){
 
 
@@ -275,7 +271,8 @@ public class DataSource implements DataConstants{
         //If time is undefined period is set to the beginning of year 0
         if(start == null || end == null)
         {
-            start = LocalDate.of(0,1,1);
+
+            start = LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),1);
             end = LocalDate.now();
         }
 
@@ -472,7 +469,7 @@ public class DataSource implements DataConstants{
 
         if(start == null || end == null)
         {
-            start = LocalDate.of(0,1,1);
+            start = LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),1);
             end = LocalDate.now();
         }
 
@@ -529,7 +526,7 @@ public class DataSource implements DataConstants{
 
         if(start == null || end == null)
         {
-            start = LocalDate.of(0,1,1);
+            start = LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),1);
             end = LocalDate.now();
         }
 

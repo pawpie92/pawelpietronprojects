@@ -17,7 +17,7 @@
             <TextField fx:id="amount" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Date" GridPane.columnIndex="0" GridPane.rowIndex="2" />
             <DatePicker fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-         <ComboBox fx:id="comboTitle" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="comboTitle" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" />
          <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />

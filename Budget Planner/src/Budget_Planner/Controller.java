@@ -58,6 +58,12 @@ public class Controller {
 
     @FXML
     public void initialize(){
+        logIn();
+    }
+
+    @FXML
+    public void logIn(){
+        loggedIn = false;
         while(!loggedIn){
             Dialog<ButtonType> dialog = new Dialog();
             dialog.setTitle("Welcome to Budget Planner");
@@ -84,11 +90,10 @@ public class Controller {
                 if(controller.loginToBudget() != null){
                     loggedIn = true;
                     currentUserID = controller.loginToBudget().getUserID();
+                    listTransactions();
                 }
-
-                }
+            }
         }
-
     }
 
     @FXML
@@ -137,6 +142,7 @@ public class Controller {
             balanceSum.setTextFill(Color.GREEN);
         new Thread(task).start();
     }
+
 
     @FXML
     public void handleKeyPressed(KeyEvent keyEvent){

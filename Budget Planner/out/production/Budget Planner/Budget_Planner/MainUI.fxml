@@ -172,6 +172,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#showNewPaymentDialog" text="Payment" />
                     </items>
                   </Menu>
+                  <MenuItem fx:id="switchUser" mnemonicParsing="false" onAction="#logIn" text="Switch User" />
               <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close" />
             </items>
           </Menu>

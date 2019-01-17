@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Budget_Planner.jar" size="28748" download="eager" />
+    <jar href="Budget_Planner.jar" size="29876" download="eager" />
     <jar href="javafx-swt.jar" size="36806" download="eager" />
     <jar href="javafx.base.jar" size="749889" download="eager" />
     <jar href="javafx.controls.jar" size="2511136" download="eager" />
