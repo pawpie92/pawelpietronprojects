@@ -339,7 +339,7 @@ public class DataSource implements DataConstants{
         //If time is undefined period is set to the beginning of year 0
         if(start == null || end == null)
         {
-            start = LocalDate.of(0,1,1);
+            start = LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),1);
             end = LocalDate.now();
         }
 
@@ -347,7 +347,7 @@ public class DataSource implements DataConstants{
         {
             showDeposits.setDate(1, Date.valueOf(start));
             showDeposits.setDate(2, Date.valueOf(end));
-            showTransactionPeriod.setString(3, account);
+            showDeposits.setString(3, account);
 
             ResultSet results = showDeposits.executeQuery();
             while(results.next()){
@@ -404,7 +404,7 @@ public class DataSource implements DataConstants{
         //If time is undefined period is set to the beginning of year 0
         if(start == null || end == null)
         {
-            start = LocalDate.of(0,1,1);
+            start = LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonth(),1);
             end = LocalDate.now();
         }
 
@@ -412,7 +412,7 @@ public class DataSource implements DataConstants{
         {
             showPayments.setDate(1, Date.valueOf(start));
             showPayments.setDate(2, Date.valueOf(end));
-            showTransactionPeriod.setString(3, account);
+            showPayments.setString(3, account);
 
             ResultSet results = showPayments.executeQuery();
             while(results.next()){
